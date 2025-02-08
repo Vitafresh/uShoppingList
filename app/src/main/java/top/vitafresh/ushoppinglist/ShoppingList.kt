@@ -123,6 +123,7 @@ fun ShoppingListApp() {
                             .padding(8.dp)
                     )
 
+
                     OutlinedTextField(
                         value = itemQuantity,
                         onValueChange = { itemQuantity = it },
