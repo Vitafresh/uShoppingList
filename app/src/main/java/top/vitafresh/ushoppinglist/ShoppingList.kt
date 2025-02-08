@@ -75,7 +75,37 @@ fun ShoppingListApp() {
                 .padding(16.dp)
         ) {
             items(sItems) {
-                ShoppingListItem(it, {}, {})
+                //ShoppingListItem(it, {}, {})
+                // it -> item
+//                if(it.isEditing){
+//
+//                }
+                    item ->
+                if (item.isEditing) {
+                    ShoppingItemEditor(
+                        item = item,
+                        onEditComplete = { editedName, editedQuantity ->
+                            sItems = sItems.map { it.copy(isEditing = false) }
+                            val editedItem = sItems.find { it.id == item.id }
+                            editedItem?.let {
+                                it.name = editedName
+                                it.quantity = editedQuantity
+                            }
+                        }
+                    )
+                } else {
+                    ShoppingListItem(
+                        item = item,
+                        onEditClick = {
+                            // finding out which item we are editing
+                            // and changing isEditing to true
+                            sItems = sItems.map { it.copy(isEditing = it.id == item.id) }
+                        },
+                        onDeleteClick = {
+                            sItems = sItems - item
+                        }
+                    )
+                }
             }
         }
 
@@ -156,7 +186,8 @@ fun ShoppingListItem(
             .border(
                 border = BorderStroke(2.dp, Color.Blue),
                 shape = RoundedCornerShape(20)
-            )
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = item.name,
