@@ -75,18 +75,18 @@ fun ShoppingListApp() {
                 .padding(16.dp)
         ) {
             items(sItems) {
-                //ShoppingListItem(it, {}, {})
-                // it -> item
+//                ShoppingListItem(it, {}, {})
+//                it -> item
 //                if(it.isEditing){
 //
 //                }
-                    item ->
-                if (item.isEditing) {
+                    itemFromItems ->
+                if (itemFromItems.isEditing) {
                     ShoppingItemEditor(
-                        item = item,
+                        item = itemFromItems,
                         onEditComplete = { editedName, editedQuantity ->
                             sItems = sItems.map { it.copy(isEditing = false) }
-                            val editedItem = sItems.find { it.id == item.id }
+                            val editedItem = sItems.find { it.id == itemFromItems.id }
                             editedItem?.let {
                                 it.name = editedName
                                 it.quantity = editedQuantity
@@ -95,14 +95,14 @@ fun ShoppingListApp() {
                     )
                 } else {
                     ShoppingListItem(
-                        item = item,
+                        item = itemFromItems,
                         onEditClick = {
                             // finding out which item we are editing
                             // and changing isEditing to true
-                            sItems = sItems.map { it.copy(isEditing = it.id == item.id) }
+                            sItems = sItems.map { it.copy(isEditing = it.id == itemFromItems.id) }
                         },
                         onDeleteClick = {
-                            sItems = sItems - item
+                            sItems = sItems - itemFromItems
                         }
                     )
                 }
