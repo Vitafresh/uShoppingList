@@ -37,12 +37,17 @@ fun LocationSelectionScreen(
             cameraPositionState = cameraPositionState,
             onMapClick = {
                 userLocation.value = it
-//                cameraPositionState.position = CameraPosition.fromLatLngZoom(it, 10f)
+                cameraPositionState.position = CameraPosition.fromLatLngZoom(it, 10f)
             }
         ){
-            Marker(state = MarkerState(position = userLocation.value))
+          //Marker(state = MarkerState(position = userLocation.value))
+            Marker(
+                state = MarkerState(position = userLocation.value),
+                title = "User Location",
+                snippet = "Selected Location"
+            )
         }
-        var newLocation: LocationData
+        var newLocation = LocationData(userLocation.value.latitude, userLocation.value.longitude)
 
         Button(
             onClick = {
